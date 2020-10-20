@@ -1,25 +1,41 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import {
+  BrowserRouter as Router,
+  Switch,
+  NavLink,
+  Route,
+} from "react-router-dom";
+
+import ExpenseList from "./components/ExpenseList";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <nav
+        className="navbar is-primary"
+        role="navigation"
+        aria-label="main navigation"
+      >
+        <div className="container">
+          <div className="navbar-brand">
+            <NavLink
+              exact
+              className="navbar-item has-text-weight-bold is-size-5"
+              to="/"
+            >
+              Expenses tracker
+            </NavLink>
+          </div>
+        </div>
+      </nav>
+      <div className="container px-4 py-5">
+        <Switch>
+          <Route path="/">
+            <ExpenseList />
+          </Route>
+        </Switch>
+      </div>
+    </Router>
   );
 }
 
