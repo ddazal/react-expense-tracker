@@ -8,6 +8,7 @@ import {
 
 import ExpenseList from "./components/ExpenseList";
 import ExpenseAdd from "./components/ExpenseAdd";
+import ExpenseEdit from "./components/ExpenseEdit";
 import { ExpenseContextProvider } from "./contexts/expenses";
 
 function App() {
@@ -38,6 +39,9 @@ function App() {
             </Route>
             <Route path="/add">
               <ExpenseAdd />
+            </Route>
+            <Route path="/edit/:id">
+              <ExpenseEdit />
             </Route>
           </Switch>
         </div>

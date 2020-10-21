@@ -1,9 +1,16 @@
 import React, { useState } from "react";
+import { format } from "date-fns";
 
 const ExpenseForm = ({ title, onSubmit, children, expense }) => {
+  const parseDate = (date) => {
+    return format(date, "yyyy-MM-dd");
+  };
+
   const [description, setDescription] = useState(expense?.description || "");
   const [amount, setAmount] = useState(expense?.amount || "");
-  const [date, setDate] = useState(expense?.date || "");
+  const [date, setDate] = useState(
+    expense?.date ? parseDate(expense.date) : ""
+  );
 
   const handleSubmit = (e) => {
     e.preventDefault();
