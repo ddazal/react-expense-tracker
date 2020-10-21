@@ -1,20 +1,23 @@
-import React, { useState } from "react";
-import { format } from "date-fns";
+import React from "react";
+import { useForm } from "../hooks/form";
 
 const ExpenseForm = ({ title, onSubmit, children, expense }) => {
-  const parseDate = (date) => {
-    return format(date, "yyyy-MM-dd");
-  };
-
-  const [description, setDescription] = useState(expense?.description || "");
-  const [amount, setAmount] = useState(expense?.amount || "");
-  const [date, setDate] = useState(
-    expense?.date ? parseDate(expense.date) : ""
-  );
+  const {
+    fields,
+    isValid,
+    setDescription,
+    setAmount,
+    setDate,
+    handleBlur,
+  } = useForm(expense);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const form = { description, amount, date: new Date(date) };
+    const form = {
+      description: fields.description.value,
+      amount: +fields.amount.value,
+      date: new Date(fields.date.value),
+    };
     onSubmit(form);
   };
 
@@ -37,12 +40,15 @@ const ExpenseForm = ({ title, onSubmit, children, expense }) => {
               className="input"
               autoComplete="off"
               placeholder="Amen Ramen"
-              value={description}
+              value={fields.description.value}
               onChange={(e) => setDescription(e.target.value)}
+              onBlur={() => handleBlur("description")}
               required
             />
           </div>
-          <p className="help is-danger">You must provide a description</p>
+          {fields.description.touched && !fields.description.valid && (
+            <p className="help is-danger">You must provide a description</p>
+          )}
         </div>
         <div className="field">
           <label htmlFor="amount" className="label">
@@ -55,12 +61,15 @@ const ExpenseForm = ({ title, onSubmit, children, expense }) => {
               className="input"
               placeholder="10.25"
               autoComplete="off"
-              value={amount}
+              value={fields.amount.value}
               onChange={(e) => setAmount(e.target.value)}
+              onBlur={() => handleBlur("amount")}
               required
             />
           </div>
-          <p className="help is-danger">You must provide a valid amount</p>
+          {fields.amount.touched && !fields.amount.valid && (
+            <p className="help is-danger">You must provide a valid amount</p>
+          )}
         </div>
         <div className="field">
           <label htmlFor="date" className="label">
@@ -71,16 +80,23 @@ const ExpenseForm = ({ title, onSubmit, children, expense }) => {
               type="date"
               name=""
               id="date"
-              value={date}
+              value={fields.date.value}
               onChange={(e) => setDate(e.target.value)}
+              onBlur={() => handleBlur("date")}
               className="input"
               required
             />
           </div>
-          <p className="help is-danger">You must provide a date</p>
+          {fields.date.touched && !fields.date.valid && (
+            <p className="help is-danger">You must provide a date</p>
+          )}
         </div>
         <div className="field">
-          <button type="submit" className="button is-primary">
+          <button
+            type="submit"
+            className="button is-primary"
+            disabled={!isValid}
+          >
             {children}
           </button>
         </div>
