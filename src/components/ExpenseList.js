@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 
 import ExpenseCard from "./ExpenseCard";
-import { EXPENSES } from "../mock-expenses";
+import { ExpenseContext } from "../contexts/expenses";
 
 const ExpenseList = () => {
-  const [expenses, setExpenses] = useState(EXPENSES);
+  const { expenses, setExpenses } = useContext(ExpenseContext);
 
   const deleteExpense = (id) => {
     const answer = window.confirm("Delete expense?");
