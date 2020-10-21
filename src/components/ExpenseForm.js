@@ -37,12 +37,16 @@ const ExpenseForm = ({ title, onSubmit, children, expense }) => {
             <input
               id="desc"
               type="text"
-              className="input"
               autoComplete="off"
               placeholder="Amen Ramen"
               value={fields.description.value}
               onChange={(e) => setDescription(e.target.value)}
               onBlur={() => handleBlur("description")}
+              className={`input ${fields.description.valid && "is-primary"} ${
+                fields.description.touched &&
+                !fields.description.valid &&
+                "is-danger"
+              }`.trim()}
               required
             />
           </div>
@@ -58,12 +62,14 @@ const ExpenseForm = ({ title, onSubmit, children, expense }) => {
             <input
               type="number"
               id="amount"
-              className="input"
               placeholder="10.25"
               autoComplete="off"
               value={fields.amount.value}
               onChange={(e) => setAmount(e.target.value)}
               onBlur={() => handleBlur("amount")}
+              className={`input ${fields.amount.valid && "is-primary"} ${
+                fields.amount.touched && !fields.amount.valid && "is-danger"
+              }`.trim()}
               required
             />
           </div>
@@ -83,7 +89,9 @@ const ExpenseForm = ({ title, onSubmit, children, expense }) => {
               value={fields.date.value}
               onChange={(e) => setDate(e.target.value)}
               onBlur={() => handleBlur("date")}
-              className="input"
+              className={`input ${fields.date.valid && "is-primary"} ${
+                fields.date.touched && !fields.date.valid && "is-danger"
+              }`.trim()}
               required
             />
           </div>
